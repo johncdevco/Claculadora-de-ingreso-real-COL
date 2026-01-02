@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -250,21 +251,21 @@ const App: React.FC = () => {
   const cardBaseClasses = "bg-white p-6 lg:p-8 rounded-2xl shadow-sm border border-slate-200 transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 py-8 px-4 sm:px-6 lg:py-16 xl:text-[18px]">
+    <div className="min-h-screen bg-slate-50 text-slate-900 py-8 px-4 sm:px-6 lg:py-12 xl:text-[18px]">
       <div className="max-w-4xl mx-auto xl:max-w-7xl">
-        <header className="mb-12 lg:mb-16 text-center">
+        <header className="mb-8 lg:mb-10 text-center">
           <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight sm:text-4xl lg:text-5xl mb-4">
-            Calculadora de Ingreso Real
+            NetoReal
           </h1>
           <p className="text-lg text-slate-500 max-w-2xl mx-auto lg:text-xl">
             Calcula cuánto dinero te queda realmente después de aportes legales y provisiones financieras como contratista independiente en Colombia.
           </p>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-start mb-16">
-          <div className="flex flex-col gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-6 xl:gap-5 items-start mb-16">
+          <div className="flex flex-col gap-6">
             <section className={cardBaseClasses}>
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-slate-800">
+              <h2 className="text-xl font-bold mb-5 flex items-center gap-2 text-slate-800">
                 <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -342,11 +343,29 @@ const App: React.FC = () => {
                 </p>
               </div>
             </section>
+
+            <section className="bg-slate-900 text-slate-100 p-8 lg:p-10 rounded-[2rem] shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-slate-300/10 hover:-translate-y-1.5">
+              <h3 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-6 border-b border-slate-800 pb-5">Resumen de Operación</h3>
+              <div className="space-y-6">
+                <div className="group">
+                  <p className="text-slate-500 text-xs uppercase font-bold mb-1 transition-colors group-hover:text-red-400">Costo Total de Operación</p>
+                  <div className="flex justify-between items-end">
+                    <span className="text-2xl lg:text-3xl font-bold text-red-400 transition-all group-hover:scale-105 origin-left">{formatCurrency(results.totalCosts)}</span>
+                    <span className="text-red-400/60 text-sm font-bold">-{results.nonDisposablePercent.toFixed(1)}%</span>
+                  </div>
+                </div>
+                <div className="h-px bg-slate-800"></div>
+                <div className="group">
+                  <p className="text-slate-500 text-xs uppercase font-bold mb-1 transition-colors group-hover:text-white">Valor Bruto Facturado</p>
+                  <p className="text-2xl lg:text-3xl font-bold text-white transition-all group-hover:scale-105 origin-left">{formatCurrency(results.contractValue)}</p>
+                </div>
+              </div>
+            </section>
           </div>
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-6">
             <section className={cardBaseClasses + " flex flex-col h-full"}>
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-5">
                 <h3 className="text-xl font-bold text-slate-800">Seguridad Social</h3>
                 <span className="text-red-600 bg-red-50 text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-tighter border border-red-100">Obligatorio</span>
               </div>
@@ -368,7 +387,7 @@ const App: React.FC = () => {
                   <span className="text-red-600">{formatCurrency(results.totalSocialSecurity)}</span>
                 </li>
               </ul>
-              <div className="mt-8">
+              <div className="mt-auto pt-6">
                 <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex gap-3 items-start shadow-sm transition-colors hover:bg-slate-100">
                   <svg className="w-5 h-5 text-slate-400 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -381,11 +400,11 @@ const App: React.FC = () => {
             </section>
 
             <section className={cardBaseClasses}>
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-5">
                 <h3 className="text-xl font-bold text-slate-800">Provisiones Financieras</h3>
                 <span className="text-amber-600 bg-amber-50 text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-tighter border border-amber-100">Sugerido</span>
               </div>
-              <ul className="space-y-6">
+              <ul className="space-y-4">
                 <li className="flex justify-between items-center text-sm lg:text-base group">
                   <span className="text-slate-500 group-hover:text-slate-800 transition-colors">Vacaciones (4.17%)</span>
                   <span className="font-semibold text-slate-800">{formatCurrency(results.vacationProvision)}</span>
@@ -396,7 +415,7 @@ const App: React.FC = () => {
                 </li>
                 
                 <li className="pt-2">
-                  <label htmlFor="risk-input" className="block text-sm font-semibold text-slate-700 mb-3">Riesgo Contractual (%)</label>
+                  <label htmlFor="risk-input" className="block text-sm font-semibold text-slate-700 mb-2">Riesgo Contractual (%)</label>
                   <div className="flex flex-col gap-4">
                     <div className="relative group">
                       <input
@@ -434,7 +453,7 @@ const App: React.FC = () => {
                     </div>
                   </div>
                 </li>
-                <li className="flex justify-between items-center font-semibold text-slate-700 text-sm lg:text-base pt-2 group">
+                <li className="flex justify-between items-center font-semibold text-slate-700 text-sm lg:text-base pt-1 group">
                   <span className="group-hover:text-slate-900 transition-colors">Valor del Riesgo</span>
                   <span className="text-blue-600 font-bold">{formatCurrency(results.contractualRiskProvision)}</span>
                 </li>
@@ -446,7 +465,7 @@ const App: React.FC = () => {
             </section>
           </div>
 
-          <div className="flex flex-col gap-8 md:col-span-2 xl:col-span-1">
+          <div className="flex flex-col gap-6 md:col-span-2 xl:col-span-1">
             <section className="bg-emerald-600 p-8 lg:p-10 rounded-[2.5rem] shadow-2xl shadow-emerald-200 text-white relative overflow-hidden flex flex-col items-center text-center transition-all duration-300 hover:shadow-emerald-300/40 hover:-translate-y-1.5">
               <div className="relative z-10 w-full flex flex-col items-center">
                 <h3 className="text-emerald-100 font-bold text-xs lg:text-sm uppercase tracking-[0.2em] mb-6">Ingreso Neto Real Estimado</h3>
@@ -481,7 +500,7 @@ const App: React.FC = () => {
             </section>
 
             <section className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-200 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-5">
                 <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -524,24 +543,6 @@ const App: React.FC = () => {
                   <p className="text-[12px] text-slate-600 leading-relaxed italic">
                     Este valor bruto garantiza que, tras cubrir seguridad social y tus ahorros prestacionales ({(results.nonDisposablePercent).toFixed(1)}% de costos), logres tu ingreso neto objetivo.
                   </p>
-                </div>
-              </div>
-            </section>
-
-            <section className="bg-slate-900 text-slate-100 p-8 lg:p-10 rounded-[2rem] shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-slate-300/10 hover:-translate-y-1.5">
-              <h3 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-10 border-b border-slate-800 pb-6">Resumen de Operación</h3>
-              <div className="space-y-10">
-                <div className="group">
-                  <p className="text-slate-500 text-xs uppercase font-bold mb-3 transition-colors group-hover:text-red-400">Costo Total de Operación</p>
-                  <div className="flex justify-between items-end">
-                    <span className="text-2xl lg:text-3xl font-bold text-red-400 transition-all group-hover:scale-105 origin-left">{formatCurrency(results.totalCosts)}</span>
-                    <span className="text-red-400/60 text-sm font-bold">-{results.nonDisposablePercent.toFixed(1)}%</span>
-                  </div>
-                </div>
-                <div className="h-px bg-slate-800"></div>
-                <div className="group">
-                  <p className="text-slate-500 text-xs uppercase font-bold mb-3 transition-colors group-hover:text-white">Valor Bruto Facturado</p>
-                  <p className="text-2xl lg:text-3xl font-bold text-white transition-all group-hover:scale-105 origin-left">{formatCurrency(results.contractValue)}</p>
                 </div>
               </div>
             </section>
@@ -598,10 +599,23 @@ const App: React.FC = () => {
         </section>
 
         <footer className="mt-20 py-12 border-t border-slate-200 text-slate-400 text-sm lg:text-base text-center">
-          <p className="font-medium">© 2026 - Herramienta de Planificación Financiera para Contratistas en Colombia</p>
+          <p className="font-medium">© 2026 - NetoReal - Herramienta de Planificación Financiera para Contratistas en Colombia</p>
           <p className="mt-4 px-6 italic max-w-4xl mx-auto opacity-80 leading-relaxed whitespace-pre-wrap">
-            Esta calculadora es una herramienta de referencia. Los valores pueden variar según normativas locales or cambios en la ley tributaria. Consulta siempre con un contador profesional.
+            Esta calculadora es una herramienta de referencia. Los valores pueden variar según normativas locales o cambios en la ley tributaria.
           </p>
+          <div className="mt-8 flex justify-center">
+            <a
+              href="https://forms.gle/TSm83Q3ekuqjNYaX7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-all text-xs font-bold uppercase tracking-widest border border-transparent hover:border-blue-100"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 00-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+              Sugerencias o comentarios
+            </a>
+          </div>
         </footer>
       </div>
 
